@@ -32,7 +32,8 @@ def active_data(data):
 
 
 
-def time_predict(data, predict, start_date = '2018-04-26',predict_date ='2018-10-27',info_plots = False, stats_info = False, process_info = False, forcast = False, step_count = 100):
+
+def time_predict(data, predict, start_date = '2018-04-26',predict_date ='2018-10-27',info_plots = False, stats_info = False, process_info = False, forecast = False, step_count = 100):
     y = data.groupby('Date')[predict].mean()
     mod = sm.tsa.statespace.SARIMAX(y,
                             order=(1, 1, 1),
@@ -40,10 +41,11 @@ def time_predict(data, predict, start_date = '2018-04-26',predict_date ='2018-10
                             enforce_stationarity=False,
                             enforce_invertibility=False)
     results = mod.fit()
-    decomposition = sm.tsa.seasonal_decompose(y, model='additive')
+    
 
     
     if info_plots:
+        decomposition = sm.tsa.seasonal_decompose(y, model='additive')
         results.plot_diagnostics(figsize=(16, 8))
         plt.show()
         fig = decomposition.plot()
@@ -63,7 +65,7 @@ def time_predict(data, predict, start_date = '2018-04-26',predict_date ='2018-10
 
 
 
-    if forcast:
+    if forecast:
         pred_uc = results.get_forecast(steps=step_count)
         pred_ci = pred_uc.conf_int()
         ax = y.plot(figsize=(14, 7))
@@ -87,7 +89,15 @@ def time_predict(data, predict, start_date = '2018-04-26',predict_date ='2018-10
 
         
 
-
+def decomp_plot(data, predict, time_series_learn):
+    data['date'] = data.index
+    y = data.groupby(data['date'])[predict].mean()
+    results = time_series_learn.fit()
+    decomposition = sm.tsa.seasonal_decompose(y, model='additive')
+    results.plot_diagnostics(figsize=(16, 8))
+    plt.show()
+    fig = decomposition.plot()
+    plt.show()
 
 
 #print(data['Calories Burned'].max())
