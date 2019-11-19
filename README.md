@@ -17,6 +17,7 @@ Requirements:
 
 Summary:
 
+$ awk 'NR==36,NR==67' 2018-04-26_through_2018-05-26.csv
 WHAT IS HAPPENING ON Late August
 
 
