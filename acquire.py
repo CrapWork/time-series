@@ -1,5 +1,6 @@
 #Garret does not read the comments. I guarantee it.
 import pandas as pd
+import os
 
 def get_fitbit_data():
     
@@ -11,3 +12,5 @@ def get_store_data(use_cache=True):
     """
     blob = pd.read_csv('blob.csv')
     return blob
+
+
