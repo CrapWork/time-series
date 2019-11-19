@@ -19,6 +19,7 @@ def clean_data(df):
     It will also make every object a float.
     Returns a clean, ready to go DataFrame
     """
+    df['Date'] = pd.to_datetime(df['Date'])
     df = df.set_index('Date')
     for i in df.select_dtypes(include='object').columns:
         print(i)
