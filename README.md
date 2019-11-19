@@ -3,14 +3,21 @@ CrapWork's Mystery Fitbit Data Analysis
 Included in this repository are:
     Jupyter Notebook, detailing the data analysis process
     Python Modules, .py files containing the functions that are used in the Notebook
+        Acquire
+        Prepare
+        Explore
     Data Dictionary, explaining the terms being measured
-    Dataset, the origin dataset with our predictions appended to it
+    Dataset, the original dataset with our predictions appended to it
     Presentation, made from a handful of slides
 
 Requirements:
     Python 3
     Jupyter Notebook
     Dataset and Modules located in directory where Notebook is executed
+
+Summary:
+
+WHAT IS HAPPENING ON Late August
 
 
 
