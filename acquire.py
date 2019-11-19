@@ -1,17 +1,7 @@
 #Garret does not read the comments. I guarantee it.
 import pandas as pd
 import os
-
-# def get_fitbit_data():
-#     """
-#     Reads the merged csv in the PWD. Makes it a dataframe. This dataset was made from a BASH script that 
-#     calls 
-#     """
-#     blob = pd.read_csv('blob.csv')
-#     return blob
-
-
-# os.system('ls -l')
+from sklearn.preprocessing import StandardScaler
 
 def get_data(use_cache=True):
     """
@@ -38,3 +28,14 @@ def clean_data(df):
     # df.astype('float64',inplace=True).dtypes
 
     return df
+
+def scale_data(df):
+    """
+    Returns the dataFrame with all the columns Standardized.
+    """
+    scaler = StandardScaler()
+    scaler.fit(df)
+    df2 = scaler.transform(df)
+    columns = list(df.columns)
+    df_scaled = pd.DataFrame(df2, columns=columns)
+    return df_scaled
