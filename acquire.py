@@ -2,8 +2,12 @@
 import pandas as pd
 
 def get_fitbit_data():
+    
+
+def get_store_data(use_cache=True):
     """
-    Reads a xlsx document in the PWD. Makes it a dataframe.
+    Reads the merged csv in the PWD. Makes it a dataframe. This dataset was made from a BASH script that 
+    calls 
     """
-    blob = pd.read_excel('fitbit_data.xlsx')
+    blob = pd.read_csv('blob.csv')
     return blob
