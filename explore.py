@@ -32,7 +32,7 @@ def time_predict(data, predict, start_date = '2018-04-26',predict_date ='2018-10
     y = data.groupby('Date')[predict].mean()
     mod = sm.tsa.statespace.SARIMAX(y,
                             order=(1, 1, 1),
-                            seasonal_order=(1, 1, 0, 12),
+                            seasonal_order=(1, 1, 0, 7), #changed from 12
                             enforce_stationarity=False,
                             enforce_invertibility=False)
     results = mod.fit()
