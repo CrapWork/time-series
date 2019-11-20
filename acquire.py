@@ -20,9 +20,9 @@ def clean_data(df):
     Returns a clean, ready to go DataFrame
     """
     df['Date'] = pd.to_datetime(df['Date'])
+    df = df.sort_values('Date')
     df = df.set_index('Date')
     for i in df.select_dtypes(include='object').columns:
-        print(i)
         df[i] = df[i].str.replace(',', '')
         df[i] = df[i].astype('float64')
         #df.info()
@@ -41,7 +41,4 @@ def scale_data(df):
     df_scaled = pd.DataFrame(df2, columns=columns)
     return df_scaled
 
-
-
-data = scale_data(clean_data(get_data()))
 
