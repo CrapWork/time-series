@@ -40,8 +40,3 @@ def scale_data(df):
     df_scaled = pd.DataFrame(df2, columns=columns)
     return df_scaled
 
-
-
-data = scale_data(clean_data(get_data()))
-print(data)
-
