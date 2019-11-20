@@ -28,8 +28,7 @@ def active_data(data):
 
 
 
-
-def time_predict(data, predict, start_date = '2018-04-26',predict_date ='2018-10-27',info_plots = False, stats_info = False, process_info = False, forecast = False, step_count = 100):
+def time_predict(data, predict, start_date = '2018-04-26',predict_date ='2018-10-27',info_plots = False, decomp_plot = False, stats_info = False, process_info = False, forecast = False, step_count = 100):
     y = data.groupby('Date')[predict].mean()
     mod = sm.tsa.statespace.SARIMAX(y,
                             order=(1, 1, 1),
@@ -40,11 +39,14 @@ def time_predict(data, predict, start_date = '2018-04-26',predict_date ='2018-10
     pd.DataFrame(y)
     
     if info_plots:
-        decomposition = sm.tsa.seasonal_decompose(y = y, model='additive')
         results.plot_diagnostics(figsize=(16, 8))
         plt.show()
+        
+    if decomp_plot:
+        decomposition = sm.tsa.seasonal_decompose(y, model='additive')
         fig = decomposition.plot()
         plt.show()
+        
     pred = results.get_prediction(start=pd.to_datetime(predict_date), dynamic=False)
     pred_ci = pred.conf_int()
 
@@ -61,12 +63,9 @@ def time_predict(data, predict, start_date = '2018-04-26',predict_date ='2018-10
 
 
     if forecast:
-        print('<><><><><><>')
         pred_uc = results.get_forecast(steps=step_count)
         pred_ci = pred_uc.conf_int()
-        print(pred_uc)
         ax = y.plot(figsize=(14, 7))
-        print('!!!!')
         pred_uc.predicted_mean.plot(ax=ax, label='Forecast')
         ax.fill_between(pred_ci.index,
                 pred_ci.iloc[:, 0],
@@ -74,6 +73,17 @@ def time_predict(data, predict, start_date = '2018-04-26',predict_date ='2018-10
         plt.legend()
         plt.show()
 
+
+
+        
+    if stats_info:
+        y_forecasted = pred.predicted_mean
+        y_truth = y[predict_date:]
+        mse = ((y_forecasted - y_truth) ** 2).mean()
+        print('<<<<<>>>>><|_STATS_INFO_|><<<<<>>>>>')
+        print(results.summary().tables[1])
+
+        
 
 
         
@@ -174,14 +184,3 @@ def forecast_plot(data, predict_value):
 
 
 
-
-    
-
-data = pd.read_csv('clean_data.csv')
-
-data['Date'] = pd.to_datetime(data['Date'])
-print(data.info())
-
-print(wrangle_data().info())
-
-forecast_plot(data, 'Calories Burned')
