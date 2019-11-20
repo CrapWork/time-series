@@ -28,7 +28,8 @@ def active_data(data):
 
 
 
-def time_predict(data, predict, start_date = '2018-04-26',predict_date ='2018-10-27',info_plots = False, decomp_plot = False, stats_info = False, process_info = False, forecast = False, step_count = 100):
+
+def time_predict(data, predict, start_date = '2018-04-26',predict_date ='2018-10-27',info_plots = False, csv_return = False, decomp_plot = False, stats_info = False, process_info = False, forecast = False, step_count = 100):
     y = data.groupby('Date')[predict].mean()
     mod = sm.tsa.statespace.SARIMAX(y,
                             order=(1, 1, 1),
@@ -65,15 +66,16 @@ def time_predict(data, predict, start_date = '2018-04-26',predict_date ='2018-10
     if forecast:
         pred_uc = results.get_forecast(steps=step_count)
         pred_ci = pred_uc.conf_int()
+
         ax = y.plot(figsize=(14, 7))
+        if csv_return:
+            return pred_uc.predicted_mean
         pred_uc.predicted_mean.plot(ax=ax, label='Forecast')
         ax.fill_between(pred_ci.index,
                 pred_ci.iloc[:, 0],
                 pred_ci.iloc[:, 1], color='k', alpha=.25)
         plt.legend()
         plt.show()
-
-
 
         
     if stats_info:
@@ -82,18 +84,6 @@ def time_predict(data, predict, start_date = '2018-04-26',predict_date ='2018-10
         mse = ((y_forecasted - y_truth) ** 2).mean()
         print('<<<<<>>>>><|_STATS_INFO_|><<<<<>>>>>')
         print(results.summary().tables[1])
-
-        
-
-
-        
-    if stats_info:
-        y_forecasted = pred.predicted_mean
-        y_truth = y[predict_date:]
-        mse = ((y_forecasted - y_truth) ** 2).mean()
-        print('<<<<<>>>>><|_STATS_INFO_|><<<<<>>>>>')
-        print('MSE:  ' + str(mse))
-        print('RMSE: ' + str(round(np.sqrt(mse), 2)))
 
         
 
@@ -178,9 +168,20 @@ def forecast_plot(data, predict_value):
                 pred_ci.iloc[:, 1], color='k', alpha=.25)
     plt.legend()
     #plt.show()
+
+
+
+def csv_return(data, steps = 14):
+    column_list = list(data.columns)
+    column_list.remove('Date')
+    return_data = pd.DataFrame()
+    for c in column_list:
+        subset = time_predict(data, c, forecast = True, csv_return = True, step_count = steps)
+        return_data[c] = subset
+    return_data.to_csv('prediction_data.csv')
+    return return_data
     
-
-
-
-
-
+        
+    
+    
+    
