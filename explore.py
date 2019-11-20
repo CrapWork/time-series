@@ -8,8 +8,6 @@ def wrangle_data():
     return pd.read_excel('/Users/garrettwilliford/Downloads/fitbit/fitbit_data.xlsx')
 
 
-#data = wrangle_data()
-
 
 
 def active_data(data):
@@ -31,8 +29,6 @@ def active_data(data):
 
 
 
-
-
 def time_predict(data, predict, start_date = '2018-04-26',predict_date ='2018-10-27',info_plots = False, stats_info = False, process_info = False, forecast = False, step_count = 100):
     y = data.groupby('Date')[predict].mean()
     mod = sm.tsa.statespace.SARIMAX(y,
@@ -41,11 +37,10 @@ def time_predict(data, predict, start_date = '2018-04-26',predict_date ='2018-10
                             enforce_stationarity=False,
                             enforce_invertibility=False)
     results = mod.fit()
-    
-
+    pd.DataFrame(y)
     
     if info_plots:
-        decomposition = sm.tsa.seasonal_decompose(y, model='additive')
+        decomposition = sm.tsa.seasonal_decompose(y = y, model='additive')
         results.plot_diagnostics(figsize=(16, 8))
         plt.show()
         fig = decomposition.plot()
@@ -66,9 +61,12 @@ def time_predict(data, predict, start_date = '2018-04-26',predict_date ='2018-10
 
 
     if forecast:
+        print('<><><><><><>')
         pred_uc = results.get_forecast(steps=step_count)
         pred_ci = pred_uc.conf_int()
+        print(pred_uc)
         ax = y.plot(figsize=(14, 7))
+        print('!!!!')
         pred_uc.predicted_mean.plot(ax=ax, label='Forecast')
         ax.fill_between(pred_ci.index,
                 pred_ci.iloc[:, 0],
@@ -89,6 +87,8 @@ def time_predict(data, predict, start_date = '2018-04-26',predict_date ='2018-10
 
         
 
+
+
 def decomp_plot(data, predict, time_series_learn):
     data['date'] = data.index
     y = data.groupby(data['date'])[predict].mean()
@@ -100,9 +100,88 @@ def decomp_plot(data, predict, time_series_learn):
     plt.show()
 
 
-#print(data['Calories Burned'].max())
 
 
-#print(data)
-#time_predict(data,'Calories Burned', infostats_info = True)
+def process_plot(data, predict_value):
+    y = data.groupby('Date')[predict_value].mean()
+    mod = sm.tsa.statespace.SARIMAX(y,
+                            order=(1, 1, 1),
+                            seasonal_order=(1, 1, 0, 12),
+                            enforce_stationarity=False,
+                            enforce_invertibility=False)
+    results = mod.fit()
+    y = pd.DataFrame(y)
+    pred = results.get_prediction(start=pd.to_datetime('2018-10-27'), dynamic=False)
+    pred_ci = pred.conf_int()
+    ax = y['2018-04-26':].plot(label='observed')
+    pred.predicted_mean.plot(ax=ax, label='One-step ahead Forecast', alpha=.7, figsize=(14, 7))
+    ax.fill_between(pred_ci.index,
+                        pred_ci.iloc[:, 0],
+                        pred_ci.iloc[:, 1], color='k', alpha=.2)
+    plt.legend()
+    plt.show()
 
+
+
+def baseline_model():
+    y = data.groupby('Date')[predict_value].mean()
+    mod = sm.tsa.statespace.SARIMAX(y,
+                            order=(1, 1, 1),
+                            seasonal_order=(1, 1, 0, 12),
+                            enforce_stationarity=False,
+                            enforce_invertibility=False)
+    results = mod.fit()
+    y = pd.DataFrame(y)
+    pred = results.get_prediction(start=pd.to_datetime('2018-10-27'), dynamic=False)
+    pred_ci = pred.conf_int()
+
+
+
+
+
+def forecast_plot(data, predict_value):
+    y = data.groupby('Date')[predict_value].mean()
+    mod = sm.tsa.statespace.SARIMAX(y,
+                            order=(1, 1, 1),
+                            seasonal_order=(1, 1, 0, 12),
+                            enforce_stationarity=False,
+                            enforce_invertibility=False)
+
+    results = mod.fit()
+    pred_uc = results.get_forecast(steps=14)
+    pred_ci = pred_uc.conf_int()
+    y = pd.DataFrame(y)
+    ax = y.plot(figsize=(14, 7))
+    pred_data = pred_uc.predicted_mean
+    
+    date_data = (np.array('2018-12-29', dtype = np.datetime64) + np.arange(14))
+    
+    pred_data['Date'] = date_data
+    print(pred_data)
+    #print(pred_data)
+    #pread_data.plot(label='Forecast')
+    #plt.show()
+    ##
+    
+    ax.fill_between(pred_ci.index,
+                pred_ci.iloc[:, 0],
+                pred_ci.iloc[:, 1], color='k', alpha=.25)
+    plt.legend()
+    #plt.show()
+    
+
+
+
+
+
+
+    
+
+data = pd.read_csv('clean_data.csv')
+
+data['Date'] = pd.to_datetime(data['Date'])
+print(data.info())
+
+print(wrangle_data().info())
+
+forecast_plot(data, 'Calories Burned')
