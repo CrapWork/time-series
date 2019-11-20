@@ -1,5 +1,7 @@
 CrapWork's Mystery Fitbit Data Analysis
 
+https://mybinder.org/v2/gh/CrapWork/time-series/master?filepath=https%3A%2F%2Fgithub.com%2FCrapWork%2Ftime-series%2Fblob%2Fmaster%2Fbare-bones.ipynb
+
 Included in this repository are:
     
     Jupyter Notebook, detailing the data analysis process

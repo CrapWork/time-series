@@ -1,0 +1,4 @@
+name: fitbit
+channels:
+  - defaults
+prefix: /usr/local/anaconda3/envs/fitbit
