@@ -3,6 +3,9 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import statsmodels.api as sm
 import numpy as np
+import warnings
+
+
 
 def wrangle_data():
     return pd.read_excel('/Users/garrettwilliford/Downloads/fitbit/fitbit_data.xlsx')
