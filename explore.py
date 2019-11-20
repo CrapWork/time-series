@@ -88,7 +88,8 @@ def time_predict(data, predict, start_date = '2018-04-26',predict_date ='2018-10
         print('<<<<<>>>>><|_STATS_INFO_|><<<<<>>>>>')
         print(results.summary().tables[1])
 
-        
+
+
 
 
 
