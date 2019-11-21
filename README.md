@@ -9,14 +9,19 @@ https://mybinder.org/v2/gh/CrapWork/time-series/7136b96d220e303a270de9cb9e306a9f
 
 Included in this repository are:
     
+    Conda Environment List
+        environment.yml
+
     Jupyter Notebook, detailing the data analysis process
-    
+        analysis.ipynb
+
     Python Modules, .py files containing the functions that are used in the Notebook
         Acquire
         Explore
     
     Data Dictionary,
-    
+        data_dictionary.md
+
     Directory of raw csvs, (will be created if does not exist)
         /fitbit
             2018-04-26_through_2018-05-26.csv  2018-06-27_through_2018-07-27.csv  2018-08-27_through_2018-09-26.csv  2018-10-28_through-2018-11-27.csv
