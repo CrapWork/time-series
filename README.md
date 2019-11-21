@@ -1,6 +1,11 @@
 CrapWork's Mystery Fitbit Data Analysis
 
-https://mybinder.org/v2/gh/CrapWork/time-series/master?filepath=https%3A%2F%2Fgithub.com%2FCrapWork%2Ftime-series%2Fblob%2Fmaster%2Fbare-bones.ipynb
+To open online version of repository:
+
+https://mybinder.org/v2/gh/CrapWork/time-series/7136b96d220e303a270de9cb9e306a9fe5cadc63
+
+    No requirements are needed to use this link
+
 
 Included in this repository are:
     
