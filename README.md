@@ -2,7 +2,6 @@ CrapWork's Mystery Fitbit Data Analysis
 
 To open Jupyter Notebook from web:
 
-*No software requirements to use these links*
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/CrapWork/time-series/master)
 
