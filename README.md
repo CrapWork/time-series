@@ -24,7 +24,7 @@ Included in this repository are:
         prediction_data.csv
 
     Presentation, 
-        link to:
+        https://docs.google.com/presentation/d/1RxO_sOnriGU-3vKv1hp_h_nWzhkg7CJQyvwmUSX9MM0/edit?usp=sharing
 
     
 
