@@ -188,7 +188,7 @@ def csv_return(data, steps = 14):
 def show_bad_predictions(df, column):   
     y = df[column]
     mod = sm.tsa.statespace.SARIMAX(y,
-                                order=(1, 1, 1),
+                                order=(0, 1, 1),
                                 seasonal_order=(1, 1, 0, 12),
                                 enforce_stationarity=False,
                                 enforce_invertibility=False)
