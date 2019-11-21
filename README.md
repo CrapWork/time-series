@@ -37,7 +37,7 @@ Included in this repository are:
     Presentation, 
         https://docs.google.com/presentation/d/1RxO_sOnriGU-3vKv1hp_h_nWzhkg7CJQyvwmUSX9MM0/edit?usp=sharing
 
-    
+---    
 
 Requirements:
     Python 3 or higher,
@@ -46,8 +46,10 @@ Requirements:
 
     Notebook must be executed in same directory as repository
 
+    Explicit package requirements are found in environment.yml. The default Anaconda environment has all the 
+    necessary packages.
 
-
+---
 
 A summarization of the data.
 
