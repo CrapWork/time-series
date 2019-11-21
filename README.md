@@ -4,7 +4,9 @@ To open online version of repository:
 
 https://mybinder.org/v2/gh/CrapWork/time-series/7136b96d220e303a270de9cb9e306a9fe5cadc63
 
-    *No requirements are needed to use this link*
+    *No requirements are needed to use these link*
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/CrapWork/time-series/master)
 
 ---
 
