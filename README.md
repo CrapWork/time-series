@@ -19,6 +19,7 @@ Included in this repository are:
 
     Python Modules, .py files containing the functions that are used in the Notebook
         Acquire
+            make_big_csv.sh is used by a function in Acquire to process the data
         Explore
     
     Data Dictionary,
