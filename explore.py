@@ -184,8 +184,25 @@ def csv_return(data, steps = 14):
         return_data[c] = subset
     return_data.to_csv('prediction_data.csv')
     return return_data
-    
-        
+
+def show_bad_predictions(df, column):   
+    y = df[column]
+    mod = sm.tsa.statespace.SARIMAX(y,
+                                order=(1, 1, 1),
+                                seasonal_order=(1, 1, 0, 12),
+                                enforce_stationarity=False,
+                                enforce_invertibility=False)
+    blob = mod.fit()
+    y = pd.DataFrame(y)
+    pred = blob.get_prediction(start=pd.to_datetime('2018-07-02'), end=pd.to_datetime('2018-09-02'),dynamic=False)
+    pred_ci = pred.conf_int()
+    ax = df.Steps.plot(label='observed')
+    pred.predicted_mean.plot(ax=ax, label='Forecasted Values', alpha=.7, figsize=(14, 7))
+    ax.fill_between(pred_ci.index,
+                            pred_ci.iloc[:, 0],
+                            pred_ci.iloc[:, 1], color='k', alpha=.2)
+    plt.legend()
+    plt.show()        
     
     
     
